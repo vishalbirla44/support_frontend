@@ -21,7 +21,8 @@ export default function EmployeeSidebar() {
       {/* Logo/Header */}
       <div className="p-6 border-b border-sidebar-light">
         <h1 className="text-2xl font-bold text-whatsapp">Support Hub</h1>
-        <p className="text-sm text-gray-400 mt-1">Chat Support</p>
+        <p className="text-sm text-gray-400 mt-1">Tech Rudraum Pvt. Ltd.</p>
+        <p className="text-xs text-gray-500 mt-2">Chat Support</p>
       </div>
 
       {/* Navigation Links */}

@@ -25,7 +25,8 @@ export default function AdminSidebar() {
       {/* Logo/Header */}
       <div className="p-6 border-b border-sidebar-light">
         <h1 className="text-2xl font-bold text-whatsapp">Support Hub</h1>
-        <p className="text-sm text-gray-400 mt-1">WhatsApp Management</p>
+        <p className="text-sm text-gray-400 mt-1">Tech Rudraum Pvt. Ltd.</p>
+        <p className="text-xs text-gray-500 mt-2">WhatsApp Management</p>
       </div>
 
       {/* Navigation Links */}

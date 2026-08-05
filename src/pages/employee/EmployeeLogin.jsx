@@ -58,7 +58,8 @@ export default function EmployeeLogin() {
               <MessageSquare className="text-white" size={32} />
             </div>
             <h1 className="text-2xl font-bold text-gray-900">Support Hub</h1>
-            <p className="text-sm text-gray-600 mt-1">WhatsApp Support Platform</p>
+            <p className="text-sm text-gray-600 mt-1">Tech Rudraum Pvt. Ltd.</p>
+            <p className="text-xs text-gray-500 mt-2">WhatsApp Support Platform</p>
           </div>
 
           {/* Token Message */}
@@ -126,6 +127,9 @@ export default function EmployeeLogin() {
           <p className="text-center text-xs text-gray-600 mt-6">
             This is a secure WhatsApp support platform.<br />
             Only authorized employees can access.
+          </p>
+          <p className="text-center text-xs text-gray-500 mt-4">
+            Developed by Vishal Birla
           </p>
         </div>
       </div>

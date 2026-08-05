@@ -12,9 +12,10 @@ export default function AdminDashboard() {
   const [employees, setEmployees] = useState([])
   const [chartData, setChartData] = useState([])
   const [loading, setLoading] = useState(true)
+  const [period, setPeriod] = useState('hourly')
 
   useEffect(() => {
-    loadDashboard()
+    loadDashboard(period)
   }, [])
 
   // Listen for employee status changes
@@ -22,10 +23,12 @@ export default function AdminDashboard() {
     if (!socket) return
 
     socket.on('employee_status_changed', (data) => {
+      const isOnline = data.status ? data.status === 'online' : Boolean(data.isOnline);
+
       setEmployees((prev) =>
         prev.map((emp) =>
-          emp._id === data.employeeId
-            ? { ...emp, isOnline: data.isOnline }
+          emp._id === data.employeeId || emp.id === data.employeeId
+            ? { ...emp, isOnline }
             : emp
         )
       )
@@ -36,19 +39,18 @@ export default function AdminDashboard() {
     }
   }, [socket])
 
-  const loadDashboard = async () => {
+  const loadDashboard = async (selectedPeriod = period) => {
     try {
       setLoading(true)
-      const response = await api.get('/admin/dashboard')
-      console.log(response.data);
-      setDashboard(response.data);
+      const response = await api.get('/admin/dashboard', {
+        params: { period: selectedPeriod }
+      })
       setDashboard(response.data)
       setEmployees(response.data.employees || [])
 
-      // Transform messages per hour data for chart
       if (response.data.messagesPerHour) {
         const chartData = response.data.messagesPerHour.map((item) => ({
-          time: `${item.hour}:00`,
+          time: item.time || item.hour,
           messages: item.count
         }))
         setChartData(chartData)
@@ -59,6 +61,13 @@ export default function AdminDashboard() {
       setLoading(false)
     }
   }
+
+  const handlePeriodChange = (nextPeriod) => {
+    setPeriod(nextPeriod)
+    loadDashboard(nextPeriod)
+  }
+
+  const periodLabel = period === 'hourly' ? 'Hour' : period === 'weekly' ? 'Week' : 'Month'
 
   if (loading) {
     return (
@@ -114,7 +123,25 @@ export default function AdminDashboard() {
 
           {/* Chart */}
           <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
-            <h2 className="text-lg font-bold text-gray-900 mb-6">Messages per Hour (Today)</h2>
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+              <h2 className="text-lg font-bold text-gray-900">Messages per {periodLabel}</h2>
+              <div className="flex gap-2">
+                {['hourly', 'weekly', 'monthly'].map((option) => (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() => handlePeriodChange(option)}
+                    className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                      period === option
+                        ? 'bg-whatsapp text-white'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
+                  >
+                    {option === 'hourly' ? 'Hour' : option === 'weekly' ? 'Week' : 'Month'}
+                  </button>
+                ))}
+              </div>
+            </div>
             {chartData.length > 0 ? (
               <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={chartData}>
@@ -170,8 +197,7 @@ export default function AdminDashboard() {
                     </tr>
                   ) : (
                     employees.map((emp) => (
-                      console.log("this is emp",employees),
-                      <tr key={emp._id} className="border-b border-gray-200 hover:bg-gray-50">
+                      <tr key={emp._id || emp.id} className="border-b border-gray-200 hover:bg-gray-50">
                         <td className="px-6 py-4 text-sm font-medium text-gray-900">{emp.name}</td>
                         <td className="px-6 py-4 text-sm text-gray-600">{emp.employeeId}</td>
                         <td className="px-6 py-4">

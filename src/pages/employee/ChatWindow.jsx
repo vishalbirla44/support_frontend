@@ -56,6 +56,16 @@ const [callLink, setCallLink] = useState("");
   }, [chatId])
 
   useEffect(() => {
+    if (!socket || !chatId) return
+
+    socket.emit('join_chat', { chatId })
+
+    return () => {
+      socket.emit('leave_chat', { chatId })
+    }
+  }, [socket, chatId])
+
+  useEffect(() => {
     if (!chat?.customerId?.phoneNumber) {
       setCustomerOnline(false)
       return
