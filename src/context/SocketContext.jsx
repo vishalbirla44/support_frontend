@@ -19,7 +19,7 @@ export function SocketProvider({ children }) {
     }
 
     // Connect with JWT in handshake auth
-    const newSocket = io(import.meta.env.VITE_API_URL || 'http://localhost:5000', {
+    const newSocket = io(import.meta.env.VITE_API_URL || 'https://support-backend-jer2.onrender.com', {
       auth: { token },
       transports: ['websocket', 'polling'],
       reconnection: true,
