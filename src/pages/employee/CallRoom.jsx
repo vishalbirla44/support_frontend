@@ -11,7 +11,7 @@ import {
   VideoCameraSlashIcon,
 } from '@heroicons/react/24/solid';
 
-const SOCKET_URL = import.meta.env.VITE_API_URL || 'https://support-backend-jer2.onrender.com';
+const SOCKET_URL = import.meta.env.VITE_API_URL || 'https://support-backend-ghne.onrender.com';
 
 export default function CallRoom() {
   const { roomId } = useParams();

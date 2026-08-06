@@ -4,7 +4,7 @@ import { io } from 'socket.io-client'
 import SimplePeer from 'simple-peer'
 import api from '../../api/axios'
 
-const SOCKET_URL = import.meta.env.VITE_API_URL || 'https://support-backend-jer2.onrender.com'
+const SOCKET_URL = import.meta.env.VITE_API_URL || 'https://support-backend-ghne.onrender.com'
 
 // ─── Status States ────────────────────────────────────────────────────────────
 const STATUS = {
