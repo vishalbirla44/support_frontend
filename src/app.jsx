@@ -19,6 +19,8 @@ import MyStats from './pages/employee/MyStats';
 // Pages — Call (public)
 import CallRoom from './pages/call/CallRoom';
 
+
+console.log("API URL:", import.meta.env.VITE_API_URL);
 // ── Guards ──────────────────────────────────────────────────────────────────
 
 function RequireAuth({ children }) {
